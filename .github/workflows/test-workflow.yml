@@ -33,6 +33,9 @@ jobs:
           echo username_match=!USERNAME_MATCH!
           echo username_match=!USERNAME_MATCH! >> $GITHUB_OUTPUT
 
+      - name: Set output
+        run: echo "username_match=${{ steps.check_username.outputs.username_match }}"
+
   build:
     needs: check_username
     if: ${{ needs.check_username.outputs.username_match == 'true' }}
