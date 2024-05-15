@@ -10,8 +10,8 @@ on:
 jobs:
 
   build:
-    runs-on: lap  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    runs-on: lap 
+    environment: Staging
 
     steps:
     - name: Checkout
