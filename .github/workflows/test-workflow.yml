@@ -28,7 +28,6 @@ jobs:
             echo Current username is not in the list
             echo username_match=false >> %GITHUB_ENV%
           )
-          # echo username_match=!USERNAME_MATCH! >> %GITHUB_ENV%
 
   build:
     needs: check_username
