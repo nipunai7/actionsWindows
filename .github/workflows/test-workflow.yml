@@ -37,7 +37,7 @@ jobs:
 
   build:
     needs: check_username
-    if: ${{ needs.check_username.outputs.username_match == 'true' }}
+    if: ${{ needs.check_username.outputs.username_match == true }}
     runs-on: lap 
     environment: Staging
 
