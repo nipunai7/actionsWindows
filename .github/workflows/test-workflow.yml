@@ -53,7 +53,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         subject: 'Test email'
         body: 'This is a test email'
-        to: ${{ env.EMAILS }}
+        to: ${{ vars.EMAIL_TO }}
         from: ${{ secrets.EMAIL }}
         priority: 'normal'
         attachments: 'myfile.txt'
