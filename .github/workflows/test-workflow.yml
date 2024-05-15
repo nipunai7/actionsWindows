@@ -10,8 +10,6 @@ on:
 jobs:
   check_username:
     runs-on: windows-latest
-    outputs:
-      username_match: ${{ steps.check_username.outputs.username_match }}
     steps:
       - name: Check if current username is in the list
         id: check_username
@@ -23,21 +21,18 @@ jobs:
           for %%u in (%USERNAME_LIST%) do (
             if /I "%%u"=="%USERNAME%" (
               echo Current username is in the list
-              set "USERNAME_MATCH=true"
+              echo username_match=true >> %GITHUB_ENV%
             )
           )
           if not defined USERNAME_MATCH (
             echo Current username is not in the list
-            set "USERNAME_MATCH=false"
+            echo username_match=false >> %GITHUB_ENV%
           )
-          echo username_match=!USERNAME_MATCH! >> %GITHUB_OUTPUT%
-
-      - name: Set output
-        run: echo ${{ steps.check_username.outputs.username_match }}
+          # echo username_match=!USERNAME_MATCH! >> %GITHUB_ENV%
 
   build:
     needs: check_username
-    if: ${{ needs.check_username.outputs.username_match == true }}
+    if: ${{ github.env.username_match == 'true' }}
     runs-on: lap 
     environment: Staging
 
