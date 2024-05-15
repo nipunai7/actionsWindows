@@ -31,7 +31,7 @@ jobs:
             set "USERNAME_MATCH=false"
           )
           echo "username_match=!USERNAME_MATCH!" >> $GITHUB_OUTPUT
-          echo username_match=!USERNAME_MATCH! >> $GITHUB_OUTPUT
+          echo username_match=!USERNAME_MATCH! >> %GITHUB_OUTPUT%
 
       - name: Set output
         run: echo "username_match=${{ steps.check_username.outputs.username_match }}"
