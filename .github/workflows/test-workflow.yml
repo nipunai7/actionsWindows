@@ -10,7 +10,6 @@ on:
 jobs:
 
   build:
-
     runs-on: lap  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
@@ -35,6 +34,29 @@ jobs:
     #     Configuration: ${{ matrix.configuration }}
 
     # Remove the pfx
-    - name: Remove the pfx
+    - name: Run the batch file
       shell: cmd
       run: run.bat
+  
+  email:
+    needs: build
+    runs-on: lap
+
+    steps:
+    # Send the generated file in email
+    - name: Send email
+      uses: dawidd6/action-send-mail@v3.12.0
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        username: ${{ secrets.EMAIL }}
+        password: ${{ secrets.PASSWORD }}
+        subject: 'Test email'
+        body: 'This is a test email'
+        to: ${{ secrets.EMAIL }}
+        from: ${{ secrets.EMAIL }}
+        priority: 'normal'
+        attachments: 'myfile.txt'
+        content_type: 'text/plain'
+        debug_output: 'true'
+
