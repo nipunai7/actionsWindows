@@ -36,4 +36,5 @@ jobs:
 
     # Remove the pfx
     - name: Remove the pfx
+      shell: cmd
       run: run.bat
