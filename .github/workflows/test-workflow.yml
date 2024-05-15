@@ -21,6 +21,7 @@ jobs:
           for %%u in (%USERNAME_LIST%) do (
             if /I "%%u"=="%USERNAME%" (
               echo Current username is in the list
+              set USERNAME_MATCH=true
               echo username_match=true >> %GITHUB_ENV%
             )
           )
@@ -28,6 +29,8 @@ jobs:
             echo Current username is not in the list
             echo username_match=false >> %GITHUB_ENV%
           )
+      - name: Set output
+        run: echo ${{github.env.username_match}}
 
   build:
     needs: check_username
