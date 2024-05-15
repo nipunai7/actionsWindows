@@ -1,5 +1,5 @@
 
-name: .NET Core Desktop
+name: DCS WTUT DevOps Workflow test
 
 on:
   push:
@@ -8,14 +8,40 @@ on:
     branches: [ "main" ]
 
 jobs:
+  check_username:
+    runs-on: windows-latest
+    outputs:
+      username_match: ${{ steps.check_username.outputs.username_match }}
+    steps:
+      - name: Check if current username is in the list
+        id: check_username
+        shell: cmd
+        run: |
+          setlocal enabledelayedexpansion
+          set "USERNAME=%GITHUB_ACTOR%"
+          set "USERNAME_LIST=${{ vars.USERNAMES}}"
+          for %%u in (%USERNAME_LIST%) do (
+            if /I "%%u"=="%USERNAME%" (
+              echo Current username is in the list
+              set "USERNAME_MATCH=true"
+            )
+          )
+          if not defined USERNAME_MATCH (
+            echo Current username is not in the list
+            set "USERNAME_MATCH=false"
+          )
+          echo ::set-output name=username_match::!USERNAME_MATCH!
 
   build:
+    needs: check_username
+    if: ${{ needs.check_username.outputs.username_match == 'true' }}
     runs-on: lap 
     environment: Staging
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
       # with:
       #   fetch-depth: 0
 
