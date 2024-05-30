@@ -42,10 +42,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    # Remove the pfx
     - name: Run the batch file
       shell: cmd
-      run: run.bat
+      run: call x86-DebugBuild.bat
   
   email:
     needs: build
