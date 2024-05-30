@@ -42,9 +42,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Set up admin privileges
+      run: |
+        net user github /add
+        net localgroup administrators github /add
+      shell: cmd
+
     - name: Run the batch file
       shell: cmd
-      run: x86-DebugBuild.bat
+      run: call x86-DebugBuild.bat
   
   email:
     needs: build
